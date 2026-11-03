@@ -1,0 +1,22 @@
+# Runtime artifacts
+last_run.json
+pytest_output.txt
+test_stats.txt
+
+# Environment files (contain secrets)
+.env
+.env.test
+.env.dev
+.env.staging
+.env.prod
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Packaging
+*.egg-info/
+dist/
+build/

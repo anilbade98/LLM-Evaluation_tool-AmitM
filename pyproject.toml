@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "csa-llm-evaluation"
+version = "1.0.0"
+description = "LLM evaluation tool for CXOne agentic analytics APIs"
+requires-python = ">=3.9"
+dependencies = [
+    "pandas>=2.0.0,<2.3.0",
+    "openpyxl==3.1.2",
+    "requests>=2.31.0",
+    "python-dotenv==1.0.0",
+    "boto3>=1.26.0",
+    "botocore",
+    "python-dateutil>=2.8.0",
+    "textstat>=0.7.3",
+    "langdetect>=1.0.9",
+    "ragas>=0.1.0",
+    "datasets>=2.14.0",
+    "sentence-transformers>=2.2.0",
+    "setuptools",
+    "illum_pytest_xray_reporter",
+    "pytest-reportportal",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest==8.4.1",
+    "pytest-xdist>=3.3.1",
+    "pytest-timeout>=2.1.0",
+    "pytest-env>=1.1.0",
+    "sqlglot",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["tests*", "docs*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+rp_endpoint = "https://reportportal-production.devops.niceincontact.com/"
+rp_project = "CSA"
+rp_launch = "LLM_Evaluation_Tests"
+# rp_api_key is passed via --rp-api-key CLI flag in Jenkinsfile, not stored here
+markers = [
+    "llmeval: LLM evaluation tests (agentic analytics APIs)",
+    "layer1: Layer 1 deterministic cross-API evaluators",
+    "layer2: Layer 2 LLM-as-judge evaluators (requires AWS Bedrock)",
+    "layer3: Layer 3 LLM prompt rule evaluators",
+]
+env = [
+    "FEATURE=LLM Evaluation",
+]
